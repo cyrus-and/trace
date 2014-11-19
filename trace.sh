@@ -26,7 +26,12 @@ Usage:
         -i <interval>     : seconds between two consecutive measures (defaults to 1s)
 
     Options -g, -m and -x can (and should) be used multiple times. Options are
-    evaluated in same the order as they appear."
+    evaluated in same the order as they appear.
+
+    When using the 'run' command the program output is redirected to stderr so
+    that measures are sent to stdout.
+
+    Since the output is in a tabluar format it can be prettified with 'column -t'."
     exit 1
 }
 

@@ -102,7 +102,7 @@ function main() {
                 fi
                 ;;
             'x')
-                IFS=':' read label code <<< "$OPTARG"
+                IFS=':' read -r label code <<< "$OPTARG"
                 if [ -n "$label" -a -n "$code" ]; then
                     labels+=("$label")
                     metrics+=("eval $code")

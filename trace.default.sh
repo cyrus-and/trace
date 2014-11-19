@@ -1,8 +1,9 @@
-# This is the standard metric group, some most common system metrics are defined
-# here. This file is loaded by default. Metric functions should be simple and
-# lightweight shell commands and under no circumstances they should fork
-# processes or introduce delay. Metric names should be self-descriptive and
-# should include its unit of measure when not clear by the name itself.
+# This is the default metric group, some of most common system metrics are
+# defined here. This file is loaded by default. Metric functions should be
+# simple and lightweight shell commands and under no circumstances they should
+# fork backgroud processes or introduce delay. Metric names should be
+# self-descriptive and should include its unit of measure when not clear by the
+# name itself.
 
 read_b() { sed -n 's/^read_bytes: //p' /proc/$pid/io; }
 

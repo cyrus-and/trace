@@ -2,9 +2,6 @@
 
 DEFAULT_GROUP='./trace.default.sh'
 
-labels=()
-metrics=()
-
 function usage {
     # dump the error message
     if [ -n "$1" ]; then
@@ -77,99 +74,106 @@ function tracer {
     done
 }
 
-# parse common options
-OPTERR=0
-while getopts ':hdg:m:x:s:i:' arg; do
-    case "$arg" in
-        'h')
-            usage
+function main() {
+    labels=()
+    metrics=()
+
+    # parse common options
+    OPTERR=0
+    while getopts ':hdg:m:x:s:i:' arg; do
+        case "$arg" in
+            'h')
+                usage
+                ;;
+            'd')
+                source "$DEFAULT_GROUP"
+                ;;
+            'g')
+                source "$OPTARG"
+                ;;
+            'm')
+                # only accept metrics as functions defined in groups
+                if [ $(type -t "$OPTARG") = 'function' ]; then
+                    labels+=("$OPTARG")
+                    metrics+=("$OPTARG")
+                else
+                    echo "'$OPTARG' must be a function or an alias defined in some group."
+                    exit 1
+                fi
+                ;;
+            'x')
+                IFS=':' read label code <<< "$OPTARG"
+                if [ -n "$label" -a -n "$code" ]; then
+                    labels+=("$label")
+                    metrics+=("eval $code")
+                else
+                    usage "Invalid expression format '$OPTARG'; expecting '<label>:<code>'."
+                fi
+                ;;
+            's')
+                separator="$OPTARG"
+                ;;
+            'i')
+                interval="$OPTARG"
+                ;;
+            ':')
+                usage "The argument is needed for option '$OPTARG'."
+                ;;
+            '?')
+                usage "Unknown option '$OPTARG'."
+                ;;
+        esac
+    done
+
+    # consume the parsed options
+    shift $((OPTIND-1))
+
+    # check arguments count
+    if [ "$#" = 0 ]; then
+        usage "Missing command, either 'run' or 'attach'."
+    fi
+
+    # parse the command
+    command="$1"
+    shift
+    case "$command" in
+        'run')
+            if [ "$#" = 0 ]; then
+                usage 'Missing program to run.'
+            fi
+            # run the program in background redirecting stdout on stderr
+            program="$1"; shift
+            "$program" "$@" >&2 &
+            program_pid="$!"
             ;;
-        'd')
-            source "$DEFAULT_GROUP"
-            ;;
-        'g')
-            source "$OPTARG"
-            ;;
-        'm')
-            # only accept metrics as functions defined in groups
-            if [ $(type -t "$OPTARG") = 'function' ]; then
-                labels+=("$OPTARG")
-                metrics+=("$OPTARG")
-            else
-                echo "'$OPTARG' must be a function or an alias defined in some group."
+        'attach')
+            if [ "$#" = 0 ]; then
+                usage 'Missing PID to attach.'
+            fi
+            # check the PID is actually used
+            program_pid="$1"
+            if ! [ -d "/proc/$program_pid/" ]; then
+                echo "Process PID '$program_pid' is not running." >&2
                 exit 1
             fi
             ;;
-        'x')
-            IFS=':' read label code <<< "$OPTARG"
-            if [ -n "$label" -a -n "$code" ]; then
-                labels+=("$label")
-                metrics+=("eval $code")
-            else
-                usage "Invalid expression format '$OPTARG'; expecting '<label>:<code>'."
-            fi
-            ;;
-        's')
-            separator="$OPTARG"
-            ;;
-        'i')
-            interval="$OPTARG"
-            ;;
-        ':')
-            usage "The argument is needed for option '$OPTARG'."
-            ;;
-        '?')
-            usage "Unknown option '$OPTARG'."
+        *)
+            usage "Invalid command '$command'."
             ;;
     esac
-done
 
-# consume the parsed options
-shift $((OPTIND-1))
+    # kill all the children on ^C (SIGPIPE avoid Bash process control feedback)
+    trap 'kill -PIPE 0' SIGINT
 
-# check arguments count
-if [ "$#" = 0 ]; then
-    usage "Missing command, either 'run' or 'attach'."
-fi
+    # start data collector
+    tracer "$program_pid" "${separator:-\t}" "${interval:-1}" &
+    tracer_pid="$!"
 
-# parse the command
-command="$1"
-shift
-case "$command" in
-    'run')
-        if [ "$#" = 0 ]; then
-            usage 'Missing program to run.'
-        fi
-        # run the program in background redirecting stdout on stderr
-        program="$1"; shift
-        "$program" "$@" >&2 &
-        program_pid="$!"
-        ;;
-    'attach')
-        if [ "$#" = 0 ]; then
-            usage 'Missing PID to attach.'
-        fi
-        # check the PID is actually used
-        program_pid="$1"
-        if ! [ -d "/proc/$program_pid/" ]; then
-            echo "Process PID '$program_pid' is not running." >&2
-            exit 1
-        fi
-        ;;
-    *)
-        usage "Invalid command '$command'."
-        ;;
-esac
+    # wait program termination and do cleanup
+    waitpid "$program_pid"
+    status="$?"
+    kill "$tracer_pid" &> /dev/null
+    exit "$status"
+}
 
-# kill all the children on ^C (SIGPIPE avoid Bash process control feedback)
-trap 'kill -PIPE 0' SIGINT
-
-# start data collector
-tracer "$program_pid" "${separator:-\t}" "${interval:-1}" &
-tracer_pid="$!"
-
-# wait program termination and do cleanup
-waitpid "$program_pid"
-status="$?"
-kill "$tracer_pid" &> /dev/null
-exit "$status"
+main "$@"

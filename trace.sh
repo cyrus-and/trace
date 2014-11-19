@@ -6,15 +6,20 @@ labels=()
 metrics=()
 
 function usage {
-    echo >&2 "$1
+    # dump the error message
+    if [ -n "$1" ]; then
+        echo "$1" >&2
+        echo >&2
+    fi
 
-Usage:
+    echo >&2 "Usage:
 
     trace [<options>] -- run <program> [<arguments>]
     trace [<options>] -- attach <pid>
 
     <options> can be a combination of:
 
+        -h                : show this message
         -d                : load the default group
         -g <group>        : group file to source
         -m <metric>       : metric to use
@@ -32,7 +37,9 @@ Usage:
     that measures are sent to stdout.
 
     Since the output is in a tabluar format it can be prettified with 'column -t'."
-    exit 1
+
+    # exis successfully if no errors are given
+    [ -z "$1" ]; exit
 }
 
 function waitpid {
@@ -72,8 +79,11 @@ function tracer {
 
 # parse common options
 OPTERR=0
-while getopts ':dg:m:x:s:i:' arg; do
+while getopts ':hdg:m:x:s:i:' arg; do
     case "$arg" in
+        'h')
+            usage
+            ;;
         'd')
             source "$DEFAULT_GROUP"
             ;;

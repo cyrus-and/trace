@@ -46,7 +46,7 @@ The full usage message is shown with the `-h` option.
         -d                : load the default group
         -g <group>        : group file to source
         -m <metric>       : metric to use
-        -x <label>:<code> : custom shell code to execute in which the variable
+        -x <label> <code> : custom shell code to execute in which the variable
                             \$pid is defined to be the PID of the process being
                             traced; the given label will be shown as a column
                             header
@@ -98,10 +98,10 @@ function must be present in a previously included group file via the `-g` or
 
 There is another kind of metrics (`-x` option) that allows to quickly specify a
 custom column without having to provide a whole custom group file. The accepted
-format is `<label>:<code>`. In this case the column label is the one
+format is `<label> <code>`. In this case the column label is the one
 provided. For example:
 
-    trace -x 'file_count:ls | wc -l' -- run ./something
+    trace -x 'file_count ls | wc -l' -- run ./something
 
 [r]: http://www.r-project.org/
 [default]: trace.default.sh

@@ -15,7 +15,7 @@ buf_write_b() { sed -n 's/^wchar: //p' /proc/$pid/io; }
 
 core_count() { nproc; }
 
-cpu_load() { command ps -p $pid -o pcpu=; }
+cpu_load_perc() { command ps -p $pid -o pcpu=; }
 
 virt_mem_kb() { command ps -p $pid -o vsz=; }
 

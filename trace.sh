@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_GROUP='./trace.default.sh'
+readonly DEFAULT_GROUP='./trace.default.sh'
 
 function usage {
     # dump the error message

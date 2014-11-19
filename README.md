@@ -16,7 +16,7 @@ read/written:
 Trace the evolution of the memory allocations of an executable and the overall
 swap usage:
 
-    trace -d -mres_mem_kb -mswap_mem_kb -mused_swap_kb -mtotal_swap_kb -- run ./some-program
+    trace -d -mres_mem_kb -mswap_mem_kb -mused_swap_kb -mtotal_swap_kb -- run ./something
 
 Installation
 ------------
@@ -101,7 +101,7 @@ custom column without having to provide a whole custom group file. The accepted
 format is `<label>:<code>`. In this case the column label is the one
 provided. For example:
 
-    trace -x 'file_count:ls | wc -l' -- run ./some-program
+    trace -x 'file_count:ls | wc -l' -- run ./something
 
 [r]: http://www.r-project.org/
 [default]: trace.default.sh

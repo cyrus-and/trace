@@ -128,7 +128,7 @@ done
 shift $((OPTIND-1))
 
 # check arguments count
-if [ "$#" -lt 2 ]; then
+if [ "$#" = 0 ]; then
     usage "Missing command, either 'run' or 'attach'."
 fi
 
@@ -137,13 +137,24 @@ command="$1"
 shift
 case "$command" in
     'run')
+        if [ "$#" = 0 ]; then
+            usage 'Missing program to run.'
+        fi
         # run the program in background redirecting stdout on stderr
         program="$1"; shift
         "$program" "$@" >&2 &
         program_pid="$!"
         ;;
     'attach')
+        if [ "$#" = 0 ]; then
+            usage 'Missing PID to attach.'
+        fi
+        # check the PID is actually used
         program_pid="$1"
+        if ! [ -d "/proc/$program_pid/" ]; then
+            echo "Process PID '$program_pid' is not running." >&2
+            exit 1
+        fi
         ;;
     *)
         usage "Invalid command '$command'."

@@ -22,8 +22,8 @@ function usage {
         -m <metric>       : metric to use
         -x <label> <code> : custom shell code to execute in which the variable
                             \$pid is defined to be the PID of the process being
-                            traced; the given label will be shown as a column
-                            header
+                            traced; the first word of the argument is the label
+                            and it will be shown as a column header
         -s <separator>    : column separator (defaults to tab)
         -i <interval>     : seconds between two consecutive measures (defaults to 1s)
 
@@ -35,7 +35,7 @@ function usage {
 
     Since the output is in a tabluar format it can be prettified with 'column -t'."
 
-    # exis successfully if no errors are given
+    # exit successfully if no errors are given
     [ -z "$1" ]; exit
 }
 

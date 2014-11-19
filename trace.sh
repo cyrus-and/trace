@@ -137,7 +137,7 @@ case "$command" in
         ;;
 esac
 
-# kill all the children on ^C (SIGPIPE avoid Bash process controll feedback)
+# kill all the children on ^C (SIGPIPE avoid Bash process control feedback)
 trap 'kill -PIPE 0' SIGINT
 
 # start data collector

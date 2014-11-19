@@ -89,7 +89,7 @@ while getopts ':dg:m:x:s:i:' arg; do
             ;;
         'x')
             IFS=':' read label code <<< "$OPTARG"
-            if [ -n "$label" && -n "$code" ]; then
+            if [ -n "$label" -a -n "$code" ]; then
                 labels+=("$label")
                 metrics+=("$code")
             else

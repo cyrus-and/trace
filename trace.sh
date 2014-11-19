@@ -9,6 +9,7 @@ function usage {
     echo >&2 "$1
 
 Usage:
+
     trace [<options>] -- run <program> [<arguments>]
     trace [<options>] -- attach <pid>
 

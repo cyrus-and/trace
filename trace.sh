@@ -76,16 +76,14 @@ while getopts ':dg:m:x:s:i:' arg; do
             source "$OPTARG"
             ;;
         'm')
-            # only accept aliases or functions defined in this as metrics
-            case $(type -t "$OPTARG") in
-                function|alias)
-                    labels+=("$OPTARG")
-                    metrics+=("$OPTARG")
-                    ;;
-                *)
-                    echo "'$OPTARG' must be a function or an alias defined in some group."
-                    exit 1
-            esac
+            # only accept metrics as functions defined in groups
+            if [ $(type -t "$OPTARG") = 'function' ]; then
+                labels+=("$OPTARG")
+                metrics+=("$OPTARG")
+            else
+                echo "'$OPTARG' must be a function or an alias defined in some group."
+                exit 1
+            fi
             ;;
         'x')
             IFS=':' read label code <<< "$OPTARG"

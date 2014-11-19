@@ -58,7 +58,7 @@ function tracer {
         # dump the next metric
         for metric in "${metrics[@]}"; do
             echo -n -e "$separator"
-            eval "$metric" | xargs echo -n # trim whitespaces
+            $metric | xargs echo -n # trim whitespaces
         done
         echo
         sleep "$interval"
@@ -91,7 +91,7 @@ while getopts ':dg:m:x:s:i:' arg; do
             IFS=':' read label code <<< "$OPTARG"
             if [ -n "$label" -a -n "$code" ]; then
                 labels+=("$label")
-                metrics+=("$code")
+                metrics+=("eval $code")
             else
                 usage "Invalid expression format '$OPTARG'; expecting '<label>:<code>'."
             fi

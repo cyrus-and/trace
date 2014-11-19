@@ -52,6 +52,8 @@ function tracer {
     local pid="$1"
     local separator="$2"
     local interval="$3"
+    local label
+    local metric
     # record time and write the first label
     local start="$(date +%s)"
     echo -n 'seconds'
@@ -75,8 +77,11 @@ function tracer {
 }
 
 function main() {
-    labels=()
-    metrics=()
+    local label
+    local code
+
+    local labels=()
+    local metrics=()
 
     # parse common options
     OPTERR=0

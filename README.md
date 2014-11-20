@@ -8,6 +8,16 @@ can be used out of the box with tools like [R][r].
 Examples
 --------
 
+Monitor the first 100 seconds of Google Chrome that from cold-start fires up and
+load a web site:
+
+    trace -d -mcpu_load_perc -mres_mem_kb -mread_b -mwrite_b -- run google-chrome
+
+now using a [simple R script](plot.R) it is possible to obtain a plot like this
+one:
+
+![Plot](http://i.imgur.com/VTYBk6L.png)
+
 Attach to a running instance of `cp` to monitor the amount of bytes
 read/written:
 

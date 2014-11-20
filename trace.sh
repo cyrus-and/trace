@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-readonly DEFAULT_GROUP='./trace.default.sh'
+readonly BASE_DIR="$(dirname $(readlink -e $0))"
+readonly DEFAULT_GROUP="$BASE_DIR/trace.default.sh"
 
 function usage {
     # dump the error message

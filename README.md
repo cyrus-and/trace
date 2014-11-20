@@ -23,13 +23,13 @@ Check the CPU load and disk writes of `gzip` compressing a 100M file:
 
 this for example could produce an output similar to:
 
-    seconds  write_b    cpu_load_perc
-    0        589824     11.0
-    1        22077440   56.5
-    3        42000384   71.3
-    4        61939712   79.0
-    5        81854464   83.4
-    6        101666816  86.3
+    ms    write_b    cpu_load_perc
+    1     69632      11.0
+    1024  20094976   56.5
+    2046  40226816   71.3
+    3068  60059648   79.0
+    4090  80150528   83.4
+    5113  100286464  86.3
 
 Installation
 ------------

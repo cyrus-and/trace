@@ -56,8 +56,8 @@ function tracer {
     local label
     local metric
     # record time and write the first label
-    local start="$(date +%s)"
-    echo -n 'seconds'
+    local start="$(date +%s%3N)"
+    echo -n 'ms'
     # write the other custom labels
     for label in "${labels[@]}"; do
         echo -n -e "$separator$label"
@@ -66,7 +66,7 @@ function tracer {
     # tracer loop
     while [ -d "/proc/$pid/" ]; do
         # dump the time delta
-        echo -n "$(($(date +%s) - $start))"
+        echo -n "$(($(date +%s%3N) - $start))"
         # dump the next metric
         for metric in "${metrics[@]}"; do
             echo -n -e "$separator"

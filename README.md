@@ -44,7 +44,7 @@ Or just run it from where it is with `./trace.sh`. The only requirement is that
 if you want to use the default metrics group, the file `trace.default.sh` must
 be in the same directory as `trace.sh`.
 
-(Same apply for `uninstall.sh`).
+(Same applies for `uninstall.sh`).
 
 Usage
 -----

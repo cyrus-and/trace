@@ -25,6 +25,8 @@ swap_mem_kb() { awk '/^Swap:/ {sum+=$2} END {print sum}' /proc/$pid/smaps; }
 
 total_mem_kb() { awk '/^MemTotal:/ {print $2}' /proc/meminfo; }
 
-used_swap_kb() { awk '/^SwapCached:/ {print $2}' /proc/meminfo; }
+free_mem_kb() { awk '/^MemFree:/ {print $2}' /proc/meminfo; }
 
 total_swap_kb() { awk '/^SwapTotal:/ {print $2}' /proc/meminfo; }
+
+free_swap_kb() { awk '/^SwapFree:/ {print $2}' /proc/meminfo; }

@@ -13,10 +13,9 @@ read/written:
 
     trace -d -mread_b -mwrite_b -- attach $(pidof cp)
 
-Trace the evolution of the memory allocations of an executable and the overall
-swap usage:
+Trace the RAM usage of an executable along with the system time:
 
-    trace -d -mres_mem_kb -mswap_mem_kb -mused_swap_kb -mtotal_swap_kb -- run ./something
+    trace -d -x 'time date +%H:%M:%S ' -mres_mem_kb -- run ./something
 
 Check the CPU load and disk writes of `gzip` compressing a 100M file:
 

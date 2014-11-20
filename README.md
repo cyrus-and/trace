@@ -18,6 +18,20 @@ swap usage:
 
     trace -d -mres_mem_kb -mswap_mem_kb -mused_swap_kb -mtotal_swap_kb -- run ./something
 
+Check the CPU load and disk writes of `gzip` compressing a 100M file:
+
+    trace -d -mwrite_b -mcpu_load_perc -- run gzip a-big-file | column -t
+
+this for example could produce an output similar to:
+
+    seconds  write_b    cpu_load_perc
+    0        589824     11.0
+    1        22077440   56.5
+    3        42000384   71.3
+    4        61939712   79.0
+    5        81854464   83.4
+    6        101666816  86.3
+
 Installation
 ------------
 

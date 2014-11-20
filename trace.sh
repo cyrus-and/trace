@@ -98,7 +98,7 @@ function main() {
                 ;;
             'm')
                 # only accept metrics as functions defined in groups
-                if [ $(type -t "$OPTARG") = 'function' ]; then
+                if [ "$(type -t $OPTARG)" = 'function' ]; then
                     labels+=("$OPTARG")
                     metrics+=("$OPTARG")
                 else

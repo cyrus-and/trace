@@ -2,8 +2,8 @@ trace
 =====
 
 Start or attach to a process and monitor a customizable set of parameters (CPU,
-I/O, etc.). The generated output uses a easily parsable tabular format and is
-ready to use out of the box with tools like [R][r].
+I/O, etc.). The generated output uses a easily parsable tabular format, which
+can be used out of the box with tools like [R][r].
 
 Examples
 --------

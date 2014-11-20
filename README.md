@@ -70,7 +70,7 @@ The full usage message is shown with the `-h` option.
         -g <group>        : group file to source
         -m <metric>       : metric to use
         -x <label> <code> : custom shell code to execute in which the variable
-                            \$pid is defined to be the PID of the process being
+                            $pid is defined to be the PID of the process being
                             traced; the first word of the argument is the label
                             and it will be shown as a column header
         -s <separator>    : column separator (defaults to tab)

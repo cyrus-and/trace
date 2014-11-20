@@ -41,12 +41,20 @@ function usage {
 }
 
 function waitpid {
-    # if the pid is not child of this shell then fallback to polling
-    if ! wait "$1" &> /dev/null; then
-        while kill -0 "$1" &> /dev/null; do
-            sleep 0.5
-        done
-    fi
+    local command="$1"
+    local pid="$2"
+    case "$command" in
+        'run')
+            # wait the child and return its status
+            wait "$pid" &> /dev/null
+            ;;
+        'attach')
+            # if the pid is not child of this shell then fallback to polling
+            while kill -0 "$pid" &> /dev/null; do
+                sleep 0.5
+            done
+            ;;
+    esac
 }
 
 function tracer {
@@ -176,7 +184,7 @@ function main() {
     tracer_pid="$!"
 
     # wait program termination and do cleanup
-    waitpid "$program_pid"
+    waitpid "$command" "$program_pid"
     status="$?"
     kill "$tracer_pid" &> /dev/null
     exit "$status"

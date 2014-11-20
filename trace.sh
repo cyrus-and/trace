@@ -63,6 +63,7 @@ function tracer {
     local interval="$3"
     local label
     local metric
+    local line
     # record time and write the first label
     local start="$(date +%s%3N)"
     echo -n 'ms'
@@ -74,13 +75,14 @@ function tracer {
     # tracer loop
     while [ -d "/proc/$pid/" ]; do
         # dump the time delta
-        echo -n "$(($(date +%s%3N) - $start))"
+        line="$(($(date +%s%3N) - $start))"
         # dump the next metric
         for metric in "${metrics[@]}"; do
-            echo -n -e "$separator"
-            $metric | xargs echo -n # trim whitespaces
+            line="$line$(echo -n -e $separator)"
+            line="$line$($metric | xargs echo -n)" # trim whitespaces
         done
-        echo
+        # print atomically the line; errors are ignored and sent on stderr
+        echo "$line"
         sleep "$interval"
     done
 }

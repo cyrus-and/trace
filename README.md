@@ -105,7 +105,7 @@ group will be just enough hence there is a shortcut option `-d` that takes care
 of loading it.
 
 In case you need to write your own custom group file you can use the
-[default group][default] as a base line. Of course you should avoid naming
+[default group][default] as a baseline. Of course you should avoid naming
 conflicts when dealing with multiple files.
 
 ### Metrics

@@ -113,7 +113,7 @@ function main() {
                     labels+=("$OPTARG")
                     metrics+=("$OPTARG")
                 else
-                    echo "'$OPTARG' must be a function or an alias defined in some group."
+                    echo "'$OPTARG' must be a function defined in some group."
                     exit 1
                 fi
                 ;;

@@ -94,12 +94,12 @@ For human consumption it is also possible to pipe the output through the `column
 -t` command to determine the proper length of the columns and thus get a
 prettified version of the table.
 
-Note that when using the 'run' command the program output is redirected to
+Note that when using the `run` command the program output is redirected to
 stderr so that measures are sent to stdout.
 
 ### Groups
 
-Groups are shell files that contains user defined functions (metrics) that can
+Groups are shell files that contain user defined functions (metrics) that can
 be loaded only when needed via the `-g` option. Most of the time the default
 group will be just enough hence there is a shortcut option `-d` that takes care
 of loading it.

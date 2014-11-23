@@ -1,9 +1,10 @@
 trace
 =====
 
-Start or attach to a process and monitor a customizable set of parameters (CPU,
-I/O, etc.). The generated output uses a easily parsable tabular format, which
-can be used out of the box with tools like [R][r].
+Start or attach to a process and monitor a customizable set of metrics (CPU,
+I/O, etc.). New metrics can be added by simply providing shell commands. The
+generated output uses a easily parsable tabular format, which can be used out of
+the box with tools like [R][r].
 
 Examples
 --------

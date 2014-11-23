@@ -23,10 +23,6 @@ read/written:
 
     trace -d -mread_b -mwrite_b -- attach $(pidof cp)
 
-List all the metrics available in the default group:
-
-    trace -d -- list
-
 Trace the RAM usage of an executable along with the system time:
 
     trace -d -x 'time date +%H:%M:%S ' -mres_mem_kb -- run ./something
@@ -107,7 +103,9 @@ group will be just enough hence there is a shortcut option `-d` that takes care
 of loading it.
 
 For a list of all the available metrics in the included group files use the
-`list` command.
+`list` command, for example to list the ones in the default group:
+
+    trace -d -- list
 
 In case you need to write your own custom group file you can use the
 [default group][default] as a baseline. Of course you should avoid naming

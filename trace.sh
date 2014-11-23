@@ -109,11 +109,11 @@ function main() {
                 ;;
             'm')
                 # only accept metrics as functions defined in groups
-                if [ "$(type -t $OPTARG)" = 'function' ]; then
+                if [ "$(type -t m_$OPTARG)" = 'function' ]; then
                     labels+=("$OPTARG")
-                    metrics+=("$OPTARG")
+                    metrics+=("m_$OPTARG")
                 else
-                    echo "'$OPTARG' must be a function defined in some group."
+                    echo "'$OPTARG' must be a metric function defined in some group."
                     exit 1
                 fi
                 ;;

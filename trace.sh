@@ -14,6 +14,7 @@ function usage {
 
     trace [<options>] -- run <program> [<arguments>]
     trace [<options>] -- attach <pid>
+    trace [<options>] -- list
 
     <options> can be a combination of:
 
@@ -172,6 +173,13 @@ function main() {
                 echo "Process PID '$program_pid' is not running." >&2
                 exit 1
             fi
+            ;;
+        'list')
+            if [ "$#" != 0 ]; then
+                usage "Invalid 'list' command syntax."
+            fi
+            # dump all the metrics available
+            declare -F | awk 'substr($3,0,2) == "m_" {print substr($3,3)}'
             ;;
         *)
             usage "Invalid command '$command'."

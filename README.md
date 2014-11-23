@@ -23,6 +23,10 @@ read/written:
 
     trace -d -mread_b -mwrite_b -- attach $(pidof cp)
 
+List all the metrics available in the default group:
+
+    trace -d -- list
+
 Trace the RAM usage of an executable along with the system time:
 
     trace -d -x 'time date +%H:%M:%S ' -mres_mem_kb -- run ./something
@@ -62,6 +66,7 @@ The full usage message is shown with the `-h` option.
 
     trace [<options>] -- run <program> [<arguments>]
     trace [<options>] -- attach <pid>
+    trace [<options>] -- list
 
     <options> can be a combination of:
 
@@ -75,9 +80,6 @@ The full usage message is shown with the `-h` option.
                             and it will be shown as a column header
         -s <separator>    : column separator (defaults to tab)
         -i <interval>     : seconds between two consecutive measures (defaults to 1s)
-
-For a list of available metrics in the default group take a look at the
-[source code][default].
 
 ### Output
 
@@ -103,6 +105,9 @@ Groups are shell files that contain user defined functions (metrics) that can
 be loaded only when needed via the `-g` option. Most of the time the default
 group will be just enough hence there is a shortcut option `-d` that takes care
 of loading it.
+
+For a list of all the available metrics in the included group files use the
+`list` command.
 
 In case you need to write your own custom group file you can use the
 [default group][default] as a baseline. Of course you should avoid naming

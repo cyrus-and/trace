@@ -33,9 +33,7 @@ function usage {
     evaluated in same the order as they appear.
 
     When using the 'run' command the program output is redirected to stderr so
-    that measures are sent to stdout.
-
-    Since the output is in a tabluar format it can be prettified with 'column -t'."
+    that measures are sent to stdout."
 
     # exit successfully if no errors are given
     [ -z "$1" ]; exit

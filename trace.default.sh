@@ -30,3 +30,7 @@ free_mem_kb() { awk '/^MemFree:/ {print $2}' /proc/meminfo; }
 total_swap_kb() { awk '/^SwapTotal:/ {print $2}' /proc/meminfo; }
 
 free_swap_kb() { awk '/^SwapFree:/ {print $2}' /proc/meminfo; }
+
+total_net_tx_b() { awk '/^.*:/ && $1 != "lo:" {sum+=$2} END {print sum}' /proc/net/dev; }
+
+total_net_rx_b() { awk '/^.*:/ && $1 != "lo:" {sum+=$10} END {print sum}' /proc/net/dev; }

@@ -68,12 +68,12 @@ The full usage message is shown with the `-h` option.
 
         -h                : show this message
         -d                : load the default group
-        -g <group>        : group file to source
+        -g <group>        : group file to load
         -m <metric>       : metric to use
-        -x <label> <code> : custom shell code to execute in which the variable
-                            $pid is defined to be the PID of the process being
-                            traced; the first word of the argument is the label
-                            and it will be shown as a column header
+        -x <label> <code> : custom shell snippet to execute in which the
+                            variable $pid is defined to be the PID of the
+                            process being traced; the first word of the argument
+                            is the label and it will be shown as a column header
         -s <separator>    : column separator (defaults to tab)
         -i <interval>     : seconds between two consecutive measures (defaults to 1s)
 
@@ -97,13 +97,13 @@ stderr so that measures are sent to stdout.
 
 ### Groups
 
-Groups are shell files that contain user defined functions (metrics) that can
-be loaded only when needed via the `-g` option. Most of the time the default
-group will be just enough hence there is a shortcut option `-d` that takes care
-of loading it.
+Groups are shell scripts that contain user defined functions (metrics) and can
+be loaded only when needed via the `-g` option. Most of the time the
+[default group][default] will be just enough hence there is a shortcut option
+`-d` that takes care of loading it.
 
 For a list of all the available metrics in the included group files use the
-`list` command, for example to list the ones in the default group:
+`list` command, for example to list the ones in the [default group][default]:
 
     trace -d -- list
 

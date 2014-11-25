@@ -177,7 +177,7 @@ function main() {
                 usage "Invalid 'list' command syntax."
             fi
             # dump all the metrics available
-            declare -F | awk 'substr($3,0,2) == "m_" {print substr($3,3)}'
+            declare -F | awk 'substr($3,1,2) == "m_" {print substr($3,3)}'
             ;;
         *)
             usage "Invalid command '$command'."

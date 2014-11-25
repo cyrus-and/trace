@@ -178,6 +178,7 @@ function main() {
             fi
             # dump all the metrics available
             declare -F | awk 'substr($3,1,2) == "m_" {print substr($3,3)}'
+            exit 0
             ;;
         *)
             usage "Invalid command '$command'."

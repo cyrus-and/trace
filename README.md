@@ -26,7 +26,7 @@ read/written:
 
 Trace the RAM usage of an executable along with the system time:
 
-    trace -d -x 'time date +%H:%M:%S ' -mres_mem_kb -- run ./something
+    trace -d -x 'time:date +%H:%M:%S ' -mres_mem_kb -- run ./something
 
 Check the CPU load and disk writes of `gzip` compressing a 100M file:
 
@@ -71,7 +71,7 @@ The full usage message is shown with the `-h` option.
         -d                : load the default group
         -g <group>        : group file to load
         -m <metric>       : metric to use
-        -x <label> <code> : custom shell snippet to execute in which the
+        -x <label>:<code> : custom shell snippet to execute in which the
                             variable $pid is defined to be the PID of the
                             process being traced; the first word of the argument
                             is the label and it will be shown as a column header
@@ -125,10 +125,10 @@ function must be present in a previously included group file via the `-g` or
 
 There is another kind of metrics (`-x` option) that allows to quickly specify a
 custom column without having to provide a whole custom group file. The accepted
-format is `<label> <code>`. In this case the column label is the one
+format is `<label>:<code>`. In this case the column label is the one
 provided. For example:
 
-    trace -x 'file_count ls | wc -l' -- run ./something
+    trace -x 'file_count:ls | wc -l' -- run ./something
 
 [r]: http://www.r-project.org/
 [default]: trace.default.sh
